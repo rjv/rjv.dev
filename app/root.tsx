@@ -6,22 +6,24 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useCatch
+  useCatch,
 } from "remix";
 import type { LinksFunction } from "remix";
 
+import tailwindCssUrl from "./tailwind.css";
 import globalStylesUrl from "~/styles/global.css";
-import darkStylesUrl from "~/styles/dark.css";
 
 // https://remix.run/api/app#links
 export let links: LinksFunction = () => {
   return [
-    { rel: "stylesheet", href: globalStylesUrl },
     {
       rel: "stylesheet",
-      href: darkStylesUrl,
-      media: "(prefers-color-scheme: dark)"
-    }
+      href: tailwindCssUrl,
+    },
+    {
+      rel: "stylesheet",
+      href: globalStylesUrl,
+    },
   ];
 };
 
@@ -95,7 +97,7 @@ export function CatchBoundary() {
 
 function Document({
   children,
-  title
+  title,
 }: {
   children: React.ReactNode;
   title?: string;
@@ -121,58 +123,93 @@ function Document({
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="remix-app">
-      <header className="remix-app__header">
-        <div className="container remix-app__header-content">
-          <Link to="/" title="Remix" className="remix-app__header-home-link">
-            <RemixLogo />
-          </Link>
-          <nav aria-label="Main navigation" className="remix-app__header-nav">
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <a href="https://remix.run/docs">Remix Docs</a>
-              </li>
-              <li>
-                <a href="https://github.com/remix-run/remix">GitHub</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-      <div className="remix-app__main">
-        <div className="container remix-app__main-content">{children}</div>
+    <div className="fixed inset-y-0 w-full items-center justify-center flex">
+      <div>
+        <header>
+          <div className="container mx-auto text-cyan-400 text-center opacity-40 hover:opacity-100 transition-opacity">
+            <RVLogo />
+          </div>
+        </header>
+        <main className="page-body text-white">{children}</main>
+        <footer className="mt-16 text-white">
+          <p className="text-center text-5xl">
+            <a
+              href="https://github.com/rjv"
+              className="mx-4 inline-block text-cyan-400 hover:text-cyan-200 transition-colors"
+              title="GitHub"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg
+                className="fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              </svg>
+            </a>
+            <a
+              href="https://twitter.com/rjv"
+              className="mx-4 inline-block text-cyan-400 hover:text-cyan-200 transition-colors"
+              title="Twitter (@rjv)"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg
+                className="fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+              >
+                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+              </svg>
+            </a>
+            <a
+              href="http://www.linkedin.com/pub/roger-vandawalker/7/30/724"
+              className="mx-4 inline-block text-cyan-400 hover:text-cyan-200 transition-colors"
+              title="LinkedIn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg
+                className="fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+              >
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+              </svg>
+            </a>
+          </p>
+          <p className="text-center mt-8">
+            <strong>roger</strong>
+            <em className="font-light">(at)</em>
+            <strong>vandawalker.com</strong>
+          </p>
+        </footer>
       </div>
-      <footer className="remix-app__footer">
-        <div className="container remix-app__footer-content">
-          <p>&copy; You!</p>
-        </div>
-      </footer>
     </div>
   );
 }
 
-function RemixLogo() {
+function RVLogo() {
   return (
     <svg
-      viewBox="0 0 659 165"
+      className="inline-block fill-current w-32 md:w-64"
       version="1.1"
+      viewBox="0 0 594.45258 592.57782"
       xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-      aria-labelledby="remix-run-logo-title"
-      role="img"
-      width="106"
-      height="30"
-      fill="currentColor"
     >
-      <title id="remix-run-logo-title">Remix Logo</title>
-      <path d="M0 161V136H45.5416C53.1486 136 54.8003 141.638 54.8003 145V161H0Z M133.85 124.16C135.3 142.762 135.3 151.482 135.3 161H92.2283C92.2283 158.927 92.2653 157.03 92.3028 155.107C92.4195 149.128 92.5411 142.894 91.5717 130.304C90.2905 111.872 82.3473 107.776 67.7419 107.776H54.8021H0V74.24H69.7918C88.2407 74.24 97.4651 68.632 97.4651 53.784C97.4651 40.728 88.2407 32.816 69.7918 32.816H0V0H77.4788C119.245 0 140 19.712 140 51.2C140 74.752 125.395 90.112 105.665 92.672C122.32 96 132.057 105.472 133.85 124.16Z" />
-      <path d="M229.43 120.576C225.59 129.536 218.422 133.376 207.158 133.376C194.614 133.376 184.374 126.72 183.35 112.64H263.478V101.12C263.478 70.1437 243.254 44.0317 205.11 44.0317C169.526 44.0317 142.902 69.8877 142.902 105.984C142.902 142.336 169.014 164.352 205.622 164.352C235.83 164.352 256.822 149.76 262.71 123.648L229.43 120.576ZM183.862 92.6717C185.398 81.9197 191.286 73.7277 204.598 73.7277C216.886 73.7277 223.542 82.4317 224.054 92.6717H183.862Z" />
-      <path d="M385.256 66.5597C380.392 53.2477 369.896 44.0317 349.672 44.0317C332.52 44.0317 320.232 51.7117 314.088 64.2557V47.1037H272.616V161.28H314.088V105.216C314.088 88.0638 318.952 76.7997 332.52 76.7997C345.064 76.7997 348.136 84.9917 348.136 100.608V161.28H389.608V105.216C389.608 88.0638 394.216 76.7997 408.04 76.7997C420.584 76.7997 423.4 84.9917 423.4 100.608V161.28H464.872V89.5997C464.872 65.7917 455.656 44.0317 424.168 44.0317C404.968 44.0317 391.4 53.7597 385.256 66.5597Z" />
-      <path d="M478.436 47.104V161.28H519.908V47.104H478.436ZM478.18 36.352H520.164V0H478.18V36.352Z" />
-      <path d="M654.54 47.1035H611.788L592.332 74.2395L573.388 47.1035H527.564L568.78 103.168L523.98 161.28H566.732L589.516 130.304L612.3 161.28H658.124L613.068 101.376L654.54 47.1035Z" />
+      <title>Roger Vandawalker</title>
+      <g transform="translate(233.38 -25.274)">
+        <g transform="translate(-426.57 -294)" stroke-width="1px">
+          <path d="m771.29 495.35 4.6387 11.719h2.4414l2.1973-2.4414h2.4414l2.1973 2.4414-2.1973 2.1973v2.4414l4.6387 4.6387q0 8.7891-93.262 118.65-129.15 166.5-169.92 239.75-10.01 37.109-32.471 37.109h-9.2773q-39.551 0-67.627-30.029l4.6387-20.996-48.828-256.1-18.555-86.182v-2.1973q11.719-18.555 27.832-18.555 31.006 0 60.547 23.193 23.438 16.846 23.438 60.547 2.9297 0.73242 27.832 167.48h2.4414l55.664-72.021q22.949-19.287 25.635-32.715h2.4414l2.1973 2.4414h2.4414l20.996-20.996 2.1973 2.1973v-2.1973l-2.1973-7.0801 6.8359-4.6387h2.4414l2.1973 11.719 4.6387-4.6387-2.1973-9.2773h2.1973l-2.1973-7.0801q6.3477-15.381 13.916-18.555h2.4414l2.1973 2.1973h2.4414l4.6387-4.6387v4.6387l-2.4414 2.4414v2.1973h2.4414l25.635-32.471h2.1973v2.1973l-16.357 20.996v13.916l25.635-27.832 2.4414 2.4414h2.1973v-4.6387h2.4414l-4.6387-11.719 2.1973-2.4414h2.4414l2.1973 2.4414h2.4414l23.193-18.555 2.4414 2.1973v2.4414l-11.719 11.475v2.4414h4.6387q51.514-59.814 60.547-60.547zm-231.9-176.07q76.416 0 105.96 55.176l13.184 55.176q0 34.18-191.89 130.13-99.609 42.725-103.76 52.979-15.381 28.564-19.775 28.564-10.986 8.7891-19.775 26.367h-4.3945v2.1973l-2.1973-2.1973h-2.1973q-4.6387 0-13.184 28.809h-4.3945l2.1973 2.1973v2.1973q-6.8359 0-33.203 52.979-6.5918 26.367-26.367 26.367v-4.3945h-2.1973l-8.7891 2.1973-2.4414-2.1973h-2.1973l-6.5918 2.1973-4.3945-4.3945-4.3945 4.3945-15.381-17.578v-4.3945q0-21.973 55.176-136.72l-6.5918-2.1973 2.1973-2.1973v-2.1973l-10.986-9.0332-9.0332 2.1973-4.3945-6.5918 2.1973-2.1973v-2.1973q-13.184 0-13.184-6.5918 27.1-21.484 85.938-50.781l44.189-90.332h-2.1973q-26.367 0-50.781-50.781v-19.775q18.066-22.949 92.773-37.354 42.725-9.0332 160.89-20.02zm-121.34 163.33h2.1973q71.777-33.447 132.32-81.787v-2.1973h-2.1973q-90.332 3.418-90.332 13.428l-41.992 70.557z"></path>
+        </g>
+      </g>
     </svg>
   );
 }
