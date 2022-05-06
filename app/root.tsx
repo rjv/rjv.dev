@@ -186,9 +186,9 @@ function Layout({ children }: { children: React.ReactNode }) {
             </a>
           </p>
           <p className="text-center mt-8">
-            <strong>roger</strong>
-            <em className="font-light">(at)</em>
-            <strong>vandawalker.com</strong>
+            <strong>me</strong>
+            <em className="font-light">&middot; at &middot;</em>
+            <strong>rjv.dev</strong>
           </p>
         </footer>
       </div>
