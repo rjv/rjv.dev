@@ -185,7 +185,7 @@ function Layout({ children }: { children: React.ReactNode }) {
               </svg>
             </a>
           </p>
-          <p className="flex justify-center gap-4 mt-8">
+          <p className="flex justify-center gap-1 mt-8">
             <strong>me</strong>
             <em className="font-light">&middot; at &middot;</em>
             <strong>rjv.dev</strong>
